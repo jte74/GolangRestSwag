@@ -28,8 +28,8 @@ func main() {
 }  
 
 func print1() {  
-	go print2()  
-	fmt.Println("1")  
+**2nd thread** go print2()  
+**Main thread**	fmt.Println("1")  
   }  
   
   func print2() {  
@@ -41,3 +41,7 @@ func print1() {
   0  
   1  
   2  
+
+Une goroutine ne sera pas terminée, même la fonction/goroutine appelante est déjà terminée.  
+Une goroutine ne sera terminée que si la fonction principale est déjà terminée ou si la goroutine a déjà fait son travail.  
+Comme ce qui se passe dans l'exemple ci-dessus, la fonction print1 qui est l'appelant de print2 est terminée avant print2, mais le message de print2 est toujours imprimé.
