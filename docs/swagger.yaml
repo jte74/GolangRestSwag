@@ -1,0 +1,134 @@
+basePath: /
+definitions:
+  model.Article:
+    properties:
+      Id:
+        description: |-
+          Id
+          in: string
+        type: string
+      content:
+        description: |-
+          Content
+          in: string
+        type: string
+      desc:
+        description: |-
+          Desc
+          in: string
+        type: string
+      title:
+        description: |-
+          Title
+          in: string
+        type: string
+    type: object
+host: localhost:1323
+info:
+  contact:
+    email: soberkoder@gmail.com
+    name: API Support
+  description: This is a sample service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Article API
+  version: "1.0"
+paths:
+  /all:
+    get:
+      consumes:
+      - application/json
+      description: Return All Article
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Return All Article
+      tags:
+      - id
+  /article/{Id}:
+    get:
+      consumes:
+      - application/json
+      description: Return Single Article
+      parameters:
+      - description: Return Single Article
+        in: path
+        name: Id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Return Single Article
+      tags:
+      - id
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new article with the input paylod
+      parameters:
+      - description: Create article
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Article'
+      summary: Create a new Article
+      tags:
+      - Article
+  /delete/{Id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Article
+      parameters:
+      - description: ID of the article to be deleted
+        in: path
+        name: Id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete Article
+      tags:
+      - id
+  /update:
+    put:
+      consumes:
+      - application/json
+      description: Update Article
+      parameters:
+      - description: Update Article
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/model.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Article'
+      summary: Update Article
+      tags:
+      - id
+swagger: "2.0"

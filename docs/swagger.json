@@ -1,0 +1,190 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample service",
+        "title": "Article API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "soberkoder@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:1323",
+    "basePath": "/",
+    "paths": {
+        "/all": {
+            "get": {
+                "description": "Return All Article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "id"
+                ],
+                "summary": "Return All Article",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/article/{Id}": {
+            "get": {
+                "description": "Return Single Article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "id"
+                ],
+                "summary": "Return Single Article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Return Single Article",
+                        "name": "Id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/create": {
+            "post": {
+                "description": "Create a new article with the input paylod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Create a new Article",
+                "parameters": [
+                    {
+                        "description": "Create article",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Article"
+                        }
+                    }
+                }
+            }
+        },
+        "/delete/{Id}": {
+            "delete": {
+                "description": "Delete Article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "id"
+                ],
+                "summary": "Delete Article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the article to be deleted",
+                        "name": "Id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/update": {
+            "put": {
+                "description": "Update Article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "id"
+                ],
+                "summary": "Update Article",
+                "parameters": [
+                    {
+                        "description": "Update Article",
+                        "name": "article",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Article"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Article": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "description": "Id\nin: string",
+                    "type": "string"
+                },
+                "content": {
+                    "description": "Content\nin: string",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "Desc\nin: string",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Title\nin: string",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
