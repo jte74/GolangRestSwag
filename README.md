@@ -2,6 +2,7 @@
 
 ## Go
 
+go mod init xxx/xxx (launch go project)
 go mod tidy  
 go build  
 go run .  
