@@ -45,3 +45,9 @@ func print1() {
 Une goroutine ne sera pas terminée, même la fonction/goroutine appelante est déjà terminée.  
 Une goroutine ne sera terminée que si la fonction principale est déjà terminée ou si la goroutine a déjà fait son travail.  
 Comme ce qui se passe dans l'exemple ci-dessus, la fonction print1 qui est l'appelant de print2 est terminée avant print2, mais le message de print2 est toujours imprimé.
+
+https://medium.com/@manus.can/golang-tutorial-goroutines-and-channels-c2cd491f77ab
+
+**SQLC**
+
+https://conroy.org/introducing-sqlc
