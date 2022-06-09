@@ -26,32 +26,28 @@
 # Feel free to take a look at our documentation (https://docs.sonarcloud.io/getting-started/github/)
 # or reach out to our community forum if you need some help (https://community.sonarsource.com/c/help/sc/9)
 
-# name: SonarCloud analysis
+name: SonarCloud analysis
 
-# on:
-  # push:
-  #  branches: [ "main" ]
-  # pull_request:
-    # branches: [ "main" ]
- # workflow_dispatch:
+on:
+  push:
+    branches: [ $default-branch, $protected-branches ]
+  pull_request:
+    branches: [ $default-branch ]
+  workflow_dispatch:
 
-on: push
-name: Main Workflow
+permissions:
+  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+
 jobs:
-
-# permissions:
-  # pull-requests: read # allows SonarCloud to decorate PRs with analysis results
-
-# jobs:
   Analysis:
     runs-on: ubuntu-latest
-    
+
     steps:
-     # - name: Analyze with SonarCloud         
+      - name: Analyze with SonarCloud         
 
         # You can pin the exact commit or the version.
         # uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
-        # uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
+        uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
       - uses: actions/checkout@master
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
