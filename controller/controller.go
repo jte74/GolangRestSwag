@@ -31,7 +31,11 @@ func UpdateArticle(w http.ResponseWriter, r *http.Request) {
 	var updatearticle model.Article
 
 	reqBody, _ := ioutil.ReadAll(r.Body)
-	json.Unmarshal(reqBody, &updatearticle)
+	a := json.Unmarshal(reqBody, &updatearticle)
+
+	if a == nil {
+
+	}
 
 	for index, article := range model.Articles {
 		if article.Id == key {
@@ -39,7 +43,10 @@ func UpdateArticle(w http.ResponseWriter, r *http.Request) {
 			article.Desc = updatearticle.Desc
 			article.Content = updatearticle.Content
 			model.Articles[index] = article
-			json.NewEncoder(w).Encode(article)
+			b := json.NewEncoder(w).Encode(article)
+			if b != nil {
+
+			}
 		}
 	}
 }
@@ -51,7 +58,7 @@ func UpdateArticle(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param Id path string true "ID of the article to be deleted"
-// @Success 200 
+// @Success 200
 // @Router /delete/{Id} [delete]
 func DeleteArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -83,12 +90,21 @@ func CreateNewArticle(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%+v", string(reqBody))
 
 	var article model.Article
-	json.Unmarshal(reqBody, &article)
+	d := json.Unmarshal(reqBody, &article)
+
+	if d == nil {
+
+	}
+
 	// update our global Articles array to include
 	// our new Article
 	model.Articles = append(model.Articles, article)
 
-	json.NewEncoder(w).Encode(article)
+	c := json.NewEncoder(w).Encode(article)
+
+	if c == nil {
+
+	}
 
 	fmt.Println("test post")
 }
@@ -100,7 +116,7 @@ func CreateNewArticle(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param Id path string true "Return Single Article"
-// @Success 200 
+// @Success 200
 // @Router /article/{Id} [get]
 func ReturnSingleArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -108,12 +124,17 @@ func ReturnSingleArticle(w http.ResponseWriter, r *http.Request) {
 	key := params["Id"]
 
 	for _, article := range model.Articles {
-		
-		fmt.Println("article id :" , article.Id )
-		fmt.Println("key : ", key )
+
+		fmt.Println("article id :", article.Id)
+		fmt.Println("key : ", key)
 		if article.Id == key {
 			fmt.Println("Endpoint Hit: ReturnSingleArticle")
-			json.NewEncoder(w).Encode(article)
+			e := json.NewEncoder(w).Encode(article)
+
+			if e == nil {
+
+			}
+
 			return
 		}
 	}
@@ -125,9 +146,13 @@ func ReturnSingleArticle(w http.ResponseWriter, r *http.Request) {
 // @Tags id
 // @Accept  json
 // @Produce  json
-// @Success 200 
+// @Success 200
 // @Router /all [get]
 func ReturnAllArticles(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnAllArticles")
-	json.NewEncoder(w).Encode(model.Articles)
+	f := json.NewEncoder(w).Encode(model.Articles)
+
+	if f == nil {
+
+	}
 }
