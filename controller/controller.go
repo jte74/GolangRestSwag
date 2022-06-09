@@ -34,7 +34,7 @@ func UpdateArticle(w http.ResponseWriter, r *http.Request) {
 	a := json.Unmarshal(reqBody, &updatearticle)
 
 	if a == nil {
-
+		println(a.Error())
 	}
 
 	for index, article := range model.Articles {
@@ -45,7 +45,7 @@ func UpdateArticle(w http.ResponseWriter, r *http.Request) {
 			model.Articles[index] = article
 			b := json.NewEncoder(w).Encode(article)
 			if b != nil {
-
+				println(b.Error())
 			}
 		}
 	}
@@ -93,7 +93,7 @@ func CreateNewArticle(w http.ResponseWriter, r *http.Request) {
 	d := json.Unmarshal(reqBody, &article)
 
 	if d == nil {
-
+		println(d.Error())
 	}
 
 	// update our global Articles array to include
@@ -103,7 +103,7 @@ func CreateNewArticle(w http.ResponseWriter, r *http.Request) {
 	c := json.NewEncoder(w).Encode(article)
 
 	if c == nil {
-
+		println(c.Error())
 	}
 
 	fmt.Println("test post")
@@ -132,7 +132,7 @@ func ReturnSingleArticle(w http.ResponseWriter, r *http.Request) {
 			e := json.NewEncoder(w).Encode(article)
 
 			if e == nil {
-
+				println(e.Error())
 			}
 
 			return
@@ -153,6 +153,6 @@ func ReturnAllArticles(w http.ResponseWriter, r *http.Request) {
 	f := json.NewEncoder(w).Encode(model.Articles)
 
 	if f == nil {
-
+		println(f.Error())
 	}
 }
