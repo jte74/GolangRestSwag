@@ -93,34 +93,40 @@ jobs:
 
   ####################### PRODUCTION #######################
   PROD:
- 
+    
     environment: PROD
     runs-on: ubuntu-latest
     needs: STAGING
 
-    steps:
-     - name: Checkout
-       uses: actions/checkout@v3
-       with:
-          fetch-depth: 0
+    checkout:
+      name: Checkout
+      uses: actions/checkout@v3
+      with:
+       fetch-depth: 0
 
-     - name: Set up Go
-       uses: actions/setup-go@v3
-       with:
-         go-version: 1.18
+    go:
+      name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
 
-     - name: Build
+    build:
+       name: Build
        run: go build -v ./...
 
-     - name: Test
+    test:
+       name: Test
        run: go test -v ./...
 
-     - name: lint
+    lint:
+       name: lint
        run: |
          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.46.2
           
          golangci-lint run
-     - name: Analyze with SonarCloud     
+
+    sonar:    
+       name: Analyze with SonarCloud     
        uses: SonarSource/sonarcloud-github-action@master
        env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
@@ -130,36 +136,53 @@ jobs:
            -Dsonar.projectKey=jte74_GolangRestSwag
            -Dsonar.organization=jte74
 
-     - name: Tag Release
-       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-       run: |
-              git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
-              git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
-              npx standard-version -no-verify
-              git remote rm origin
-              git remote add origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
-              git push --follow-tags origin HEAD:main
-       env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              GITHUB_ACTOR: ${{ github.actor }}
-              GITHUB_REPOSITORY: ${{ github.repository }}
-     
-     - name: Unshallow
-       run: git fetch --prune --unshallow
+    tag:
+     name: Tag Release
+     runs-on: ubuntu-latest
+     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+     steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Bump version and Generate Changelog
+        run: |
+          git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+          npx standard-version -no-verify
+          git remote rm origin
+          git remote add origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
+          git push --follow-tags origin HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
-     - name: Get Latest Tag
-       env:
+    goreleaser:
+     runs-on: ubuntu-latest
+     needs: [tag]
+
+     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Unshallow
+        run: git fetch --prune --unshallow
+      - name: Get Latest Tag
+        env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-       run: |
+        run: |
           git fetch --tags
           TAG=$(git tag | tail -1)
-          git checkout $TAG
+            git checkout $TAG
           echo ::set-env name=GORELEASER_CURRENT_TAG::$(git tag | tail -1)
-            
-     - name: Run GoReleaser
-       uses: goreleaser/goreleaser-action@v1
-       with:
-        version: latest
-        args: release --rm-dist --release-notes CHANGELOG.md
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.18
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist --release-notes CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
