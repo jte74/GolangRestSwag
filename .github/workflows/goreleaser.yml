@@ -17,7 +17,7 @@ jobs:
   tag:
     name: Tag Release
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/origin/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -30,7 +30,7 @@ jobs:
           npx standard-version -no-verify
           git remote rm origin
           git remote add origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
-          git push --follow-tags origin HEAD:master
+          git push --follow-tags origin HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
