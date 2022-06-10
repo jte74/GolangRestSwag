@@ -191,8 +191,8 @@ jobs:
                 echo ::set-env name=GORELEASER_CURRENT_TAG::$(git tag | tail -1)
             - name: Set up Go
               uses: actions/setup-go@v1
-                with:
-                go-version: 1.18
+              with:
+              go-version: 1.18
             - name: Run GoReleaser
               uses: goreleaser/goreleaser-action@v1
               with:
