@@ -122,6 +122,7 @@ jobs:
          args:
            -Dsonar.projectKey=jte74_GolangRestSwag
            -Dsonar.organization=jte74
-      
+
+     - uses: actions/checkout@v2 
      - uses: ./.github/workflows/goreleaser
  
