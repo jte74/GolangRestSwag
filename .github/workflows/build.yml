@@ -144,14 +144,14 @@ jobs:
       sonarcloud:
         name: Analyze with SonarCloud     
         runs-on: ubuntu-latest    
-          uses: SonarSource/sonarcloud-github-action@master
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
-          with:
-            args:
-              -Dsonar.projectKey=jte74_GolangRestSwag
-              -Dsonar.organization=jte74
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+        with:
+          args:
+            -Dsonar.projectKey=jte74_GolangRestSwag
+            -Dsonar.organization=jte74
       tag:
         name: Tag Release
         runs-on: ubuntu-latest
