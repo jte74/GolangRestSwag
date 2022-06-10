@@ -16,9 +16,8 @@ jobs:
 
   ####################### DEVELOPMENT #######################
   DEV:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    environment: DEV
+
+      environment: DEV
     
       checkout:
         name: Checkout
@@ -61,10 +60,8 @@ jobs:
   ####################### STAGING #######################
   STAGING:
  
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    environment: STAGING
-    needs: DEV
+      environment: STAGING
+      needs: DEV
     
       checkout:
         name: Checkout
@@ -107,10 +104,8 @@ jobs:
   ####################### PRODUCTION #######################
   PROD:
  
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    environment: PROD
-    needs: STAGING
+      environment: PROD
+      needs: STAGING
     
       checkout:
         name: Checkout
