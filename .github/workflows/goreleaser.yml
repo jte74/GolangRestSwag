@@ -40,10 +40,12 @@ jobs:
     needs: [tag]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: Unshallow
         run: git fetch --prune --unshallow
       - name: Get Latest Tag
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           git fetch --tags
           TAG=$(git tag | tail -1)
