@@ -55,11 +55,6 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.18
-      - name: Login in Docker registry
-        uses: azure/docker-login@v1
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:
